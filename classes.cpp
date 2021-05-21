@@ -152,7 +152,6 @@ class MyTemplateClass
 {
     private:
         T values[2];
-        T a,b;
     public:
         MyTemplateClass (T first, T second)
         {

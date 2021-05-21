@@ -69,6 +69,12 @@ class Polygon
             int height_copy=height;
             return height_copy;
         };
+        // virtual float area() {return 0;}
+        virtual float area()=0; // Pure virtual functions makes Polygon abstract base class.
+        void printArea()
+        {
+            std::cout<<this->area()<<std::endl;
+        }
 };
 
 class Output
@@ -113,8 +119,11 @@ int main(void)
     rect_simple.convert(square);
     std::cout<<rect_simple.area()<<std::endl;
     std::cout<<std::endl;
+    
     // Inheritance.
-    Polygon polygon(3,5);
+    // If Polygon is abstract base class then can not initialize.
+    // Classes that contain atleast one pure virtual function is an abstract base class.
+    // Polygon polygon(3,5); 
     Rectangle2 rect2(3,5);
     Triangle triangle(3,5);
     std::cout<<rect2.area()<<std::endl;
@@ -124,6 +133,30 @@ int main(void)
     std::cout<<rect2.area()<<std::endl;
     std::cout<<triangle.area()<<std::endl;
     rect2.print_something();
+
+    // Polymorphism: pointer to a derived base class is type-compatible with a pointer to its base class.
+    Polygon* poly_rect;
+    Polygon* poly_triangle;
+    poly_rect = &rect2;
+    poly_triangle = &triangle;
+    poly_rect->set_values(100,100);
+    poly_triangle->set_values(100,100);
+    // std::cout<<poly_rect->area()<<std::endl; // Throws error as Polygon doesn't have area() method. Unless area has been defined as virtual.
+    // std::cout<<poly_triangle->area()<<std::endl; // Throws error as Polygon doesn't have area() method. Unless area has been defined as virtual.
+    std::cout<<rect2.area()<<std::endl;
+    std::cout<<triangle.area()<<std::endl;
+
+    // Virtual members.
+    std::cout<<poly_rect->area()<<std::endl; // Throws error as Polygon doesn't have area() method. Unless area has been defined as virtual.
+    std::cout<<poly_triangle->area()<<std::endl; // Throws error as Polygon doesn't have area() method. Unless area has been defined as virtual.
+    std::cout<<"asdf"<<std::endl;
+    poly_rect->printArea();
+    poly_triangle->printArea();
+
+    Polygon* poly1 = new Rectangle2(100,100);
+    Polygon* poly2 = new Triangle(100,100);
+    delete poly1;
+    delete poly2; 
 
     return 0;
 }
